@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efootball addictz</title>
+    <style>
+        :root {
+            --primary-color: #ffff00;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-light: #ffffff;
+            --text-dark: #000000;
+            --header-bg: #000000;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: var(--primary-color);
+            padding: 10px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            border-bottom: 2px solid var(--primary-color);
+            height: 70px;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 15px; }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav.nav-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 250px;
+            height: 100vh;
+            background-color: var(--card-bg);
+            padding-top: 100px;
+            transition: left 0.4s ease-in-out;
+            z-index: 1050;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid var(--primary-color);
+        }
+
+        nav.nav-menu.active { left: 0; }
+        nav.nav-menu ul { list-style: none; }
+        nav.nav-menu ul li a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 600;
+            padding: 15px 25px;
+            display: block;
+            border-bottom: 1px solid #333;
+            cursor: pointer;
+        }
+        nav.nav-menu ul li a:hover {
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+        }
+
+        main {
+            padding: 40px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 70vh;
+        }
+
+        .page-content { display: none; }
+        .page-content.active { display: block; }
+
+        .section-container { margin-bottom: 50px; }
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-left: 6px solid var(--primary-color);
+            padding-left: 12px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .player-scroll-wrapper { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px; }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 2px solid #333;
+            border-radius: 12px;
+            min-width: 172px;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .card:hover { border-color: var(--primary-color); }
+
+        .card-img-holder {
+            position: relative;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .card-img-holder img {
+            width: 100%;
+            display: block;
+            border-radius: 6px;
+        }
+        
+        .cardhlv-holder img {
+            width: 89%;
+            display: block;
+            border-radius: 6px
+        }
+
+        .card .rating {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary-color);
+            background: rgba(0, 0, 0, 0.6);
+            padding: 0 6px;
+            border-radius: 4px;
+            z-index: 2;
+            line-height: 1.2;
+        }
+         .card .position {
+            position: absolute;
+            top: 32px;
+            left: 4px;
+            font-size: 17px;
+            font-weight: 900;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 0 6px;
+            border-radius: 4px;
+            z-index: 2;
+            line-height: 1.2;
+        }
+       
+        .card .name { font-size: 14px; font-weight: bold; margin: 4px 0; color: var(--text-light); }
+        .card .form-badge { font-size: 13px; color: #DB0000; font-style: italic; }
+
+        /* --- CSS CHO GACHA SIMULATION --- */
+        .container {
+            text-align: center;
+            background: #1e1e1e;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            width: 360px;
+            border: 1px solid #333;
+            min-height: 550px;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+        }
+
+        .gacha-controls { margin: 10px 0; font-weight: bold; }
+        .gacha-controls select {
+            background: #333; color: #fff; border: 1px solid var(--primary-color);
+            padding: 5px 10px; border-radius: 5px; font-weight: bold; outline: none;
+        }
+
+                .gacha-inputs {
+            display: flex; 
+            flex-direction: column; /* Chuyển thành hàng dọc */
+            gap: 8px; 
+            margin-bottom: 15px;
+            align-items: center; /* Căn giữa các ô nhập */
+        }
+        .gacha-inputs div { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            width: 180px; /* Độ rộng của cả dòng (nhãn + ô input) */
+            font-size: 13px; 
+            color: #bbb; 
+            font-weight: bold;
+        }
+        .gacha-inputs input {
+            background: #333; 
+            border: 1px solid #555; 
+            color: #fff; 
+            padding: 4px;
+            border-radius: 4px; 
+            text-align: center;
+            width: 60px; /* Thu nhỏ chiều rộng của riêng ô hộp */
+        }
+
+
+        .gacha-stats {
+            display: flex; justify-content: space-around; background: #111;
+            padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 14px; font-weight: bold;
+        }
+
+        .gacha-result {
+            display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+            align-items: center; margin-top: 20px; flex-grow: 1;
+        }
+
+        .gacha-item {
+            padding: 10px; border: 2px solid; border-radius: 8px; font-weight: 900;
+            width: 80px; text-align: center; background: #222; text-transform: uppercase;
+            font-size: 13px; animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .epic { color: #ffd700; border-color: #ffd700 !important; text-shadow: 0 0 8px rgba(255,215,0,0.5); }
+        .twolight { color: #00e5ff; border-color: #00e5ff !important; }
+        .rac { color: #7f8c8d; border-color: #555 !important; }
+
+        .gacha-actions { margin-top: auto; padding-top: 20px; }
+        .gacha-actions button {
+            padding: 10px 15px; margin: 5px; border: none; border-radius: 6px;
+            cursor: pointer; font-weight: bold; transition: transform 0.1s;
+        }
+        .btn-roll1 { background: var(--primary-color); color: #000; }
+        .btn-roll10 { background: #00e5ff; color: #000; }
+        .btn-reset { background: #c0392b; color: #fff; }
+
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.7); z-index: 1040; display: none;
+        }
+        .menu-overlay.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <header>
+        <div class="header-left">
+            <div class="menu-toggle" id="menuToggle">
+                <span></span><span></span><span></span>
+            </div>
+            <a href="#" class="logo">eFootballaddictz</a><img src="https://thuvienvector.vn/wp-content/uploads/2025/02/co-viet-nam-png.jpg" width="60">
+        </div>        
+    </header>
+
+    <nav class="nav-menu" id="navMenu">
+        <ul>
+            <li><a class="menu-link" data-page="home">Player Database</a></li>
+            <li><a class="menu-link" data-page="manager">Manager Database</a></li>
+            <li><a class="menu-link" data-page="updates">Latest Updates</a></li>
+            <li><a class="menu-link" data-page="simulation">Simulation draw box</a></li>
+        </ul>
+    </nav>
+
+    <main id="mainContent">
+        <div id="home" class="page-content active">
+            <div class="section-container">
+                <h2 class="section-title">New Players 2026-W13</h2>
+                <div class="player-scroll-wrapper">
+                    <div class="card">
+                        <div class="card-img-holder">
+                            <div class="rating">87</div>
+                            <div class="position">LMF</div>
+                            <img src="https://d1zxa6glxh8sq9.cloudfront.net/player_88040387126185_1774513753123.webp" alt="Player">
+                        </div>                      
+                        <div class="name">Frank Ribéry</div>
+                        <div class="form-badge">Cross specialist</div>
+                    </div>                    
+                    <div class="card">
+                        <div class="card-img-holder">
+                            <div class="rating">86</div>
+                            <div class="position">RMF</div>
+                            <img src="https://d1zxa6glxh8sq9.cloudfront.net/player_88040655555524_1774513760982.webp" alt="Player">
+                        </div>                       
+                        <div class="name">Karembeu</div>
+                        <div class="form-badge">Box-to-box</div>
+		    </div>
+                    <div class="card">
+                        <div class="card-img-holder">
+                            <div class="rating">87</div>
+                            <div class="position">DMF</div>
+                            <img src="https://d1zxa6glxh8sq9.cloudfront.net/player_88040387180672_1774513767593.webp" alt="Player">
+                        </div>                       
+                        <div class="name">Gattuso</div>
+                        <div class="form-badge">The Destroyer</div>
+                    </div>
+                </div>                
+            </div>
+        </div>
+
+        <div id="manager" class="page-content">
+            <h2 class="section-title">Coins Manager</h2>$$$
+            <div class="card">
+                <div class="cardhlv-holder">
+                    <div class="name">F.Beckenbauer(LBC,Long ball)</div>
+                    <div class="form-badge">+1 Dribbling</div>
+                    <div class="form-badge">+1 Def Awareness</div>
+                </div>
+            </div>
+            <h2 class="section-title">GP Manager</h2>
+        </div>
+
+        <div id="updates" class="page-content">
+            <h2 class="section-title">Latest Updates</h2>
+            <strong>・ Added controller support for some commands used in matches.</strong>
+            <p>・ Changed the age groups that apply to Age-Based Monthly Spending Limits.</p>
+	    <p>*This notice is for users who have set Japan as their Country/Region of Residence.</p>
+            <h2 class="section-title">new box</h2>
+            <img src="https://img.konami.com/efootball/s/img/promotion/agent/1216/promo_agent.png" width="390">
+        </div>
+
+        <div id="simulation" class="page-content">
+            <h2 class="section-title">Simulation Draw Box</h2>
+            <div class="container"><strong>EPIC</strong>
+                <div class="gacha-controls">
+                    <label for="boxSize">TOTAL: </label>
+                    <select id="boxSize" onchange="resetBox()">
+                        <option value="150" selected>150</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                    </select>
+                </div>
+
+                <div class="gacha-inputs">
+                    <div>EPIC <input type="number" id="inputEpic" value="3" min="0" onchange="resetBox()"></div>
+                    <div>2LIGHT <input type="number" id="inputTwolight" value="8" min="0" onchange="resetBox()"></div>
+                </div>
+
+                <div class="gacha-stats">
+                    <div style="color:#ffd700;">EPIC: <span id="countEpic">0</span></div>
+                    <div style="color:#00e5ff;">2L: <span id="countTwolight">0</span></div>
+                    <div style="color:#7f8c8d;">BASE: <span id="countRac">0</span></div>
+                </div>
+
+                <div id="gachaResult" class="gacha-result">
+                    <small style="color:#555">READY</small>
+                </div>
+
+                <div class="gacha-actions">
+                    <button class="btn-roll1" onclick="rollGacha(1)">1x</button>
+                    <button class="btn-roll10" onclick="rollGacha(10)">10x</button>
+                    <button class="btn-reset" onclick="resetBox()">Reset Box</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Menu Logic
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuLinks = document.querySelectorAll('.menu-link');
+        const pages = document.querySelectorAll('.page-content');
+
+        function toggleMenu() {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        }
+
+        menuToggle.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                const targetId = link.getAttribute('data-page');
+                pages.forEach(p => p.classList.remove('active'));
+                const targetPage = document.getElementById(targetId);
+                if(targetPage) targetPage.classList.add('active');
+                toggleMenu();
+                window.scrollTo(0, 0);
+            });
+        });
+
+        // Gacha Logic
+        let currentBoxPool = [];
+
+        function resetBox() {
+            currentBoxPool = [];
+            const totalSize = parseInt(document.getElementById('boxSize').value);
+            const epicCount = parseInt(document.getElementById('inputEpic').value) || 0;
+            const twolightCount = parseInt(document.getElementById('inputTwolight').value) || 0;
+
+            if ((epicCount + twolightCount) > totalSize) {
+                alert("Số lượng thẻ hiếm vượt quá quy mô Box!");
+                return;
+            }
+
+            const racCount = totalSize - epicCount - twolightCount;
+
+            for(let i=0; i<epicCount; i++) currentBoxPool.push('epic');
+            for(let i=0; i<twolightCount; i++) currentBoxPool.push('twolight');
+            for(let i=0; i<racCount; i++) currentBoxPool.push('rac');
+
+            for (let i = currentBoxPool.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [currentBoxPool[i], currentBoxPool[j]] = [currentBoxPool[j], currentBoxPool[i]];
+            }
+
+            document.getElementById('gachaResult').innerHTML = '<small style="color:#555">Ready</small>';
+            updateStats();
+        }
+
+        function updateStats() {
+            let e = 0, t = 0, r = 0;
+            currentBoxPool.forEach(item => {
+                if(item === 'epic') e++;
+                else if(item === 'twolight') t++;
+                else r++;
+            });
+            document.getElementById('countEpic').innerText = e;
+            document.getElementById('countTwolight').innerText = t;
+            document.getElementById('countRac').innerText = r;
+        }
+
+        function rollGacha(times) {
+            const container = document.getElementById('gachaResult');
+            if (currentBoxPool.length === 0) {
+                container.innerHTML = '<span style="color:red">Box trống! Hãy Reset.</span>';
+                return;
+            }
+
+            container.innerHTML = '';
+            let rolls = Math.min(times, currentBoxPool.length);
+
+            for(let i=0; i<rolls; i++) {
+                const item = currentBoxPool.pop();
+                const div = document.createElement('div');
+                div.className = `gacha-item ${item}`;
+                div.innerText = item === 'epic' ? 'EPIC' : (item === 'twolight' ? '2LIGHT' : 'BASE');
+                container.appendChild(div);
+            }
+            updateStats();
+        }
+
+        document.addEventListener('DOMContentLoaded', resetBox);
+    </script>
+</body>
+</html>
