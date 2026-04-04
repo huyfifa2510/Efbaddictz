@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Details - eFootballaddictz</title>
+    <style>
+        :root {
+            --primary-yellow: #ffff00;
+            --bg-dark: #121212;
+            --card-bg: #1e1e1e;
+            --text-white: #ffffff;
+            --border-color: #333;
+            
+            /* Màu chỉ số theo chuẩn eFootball */
+            --color-low: #444;        /* Dưới 70: Xám */
+            --color-mid: #ffff00;     /* 70-79: Vàng */
+            --color-high: #00ff00;    /* 80-89: Xanh lá */
+            --color-top: #00e5ff;     /* 90+: Xanh dương/Cyan (Tùy chọn) */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            margin: 0;
+            padding: 15px;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        /* Header Info */
+        .player-header {
+            display: flex;
+            gap: 20px;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .img-container {
+            position: relative;
+            width: 180px;
+            height: 258px;
+            flex-shrink: 0;
+        }
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .overlay-rating {
+            position: absolute;
+            top: 8px;
+            left: 10px;
+            font-size: 23px;
+            font-weight: 900;
+            color: var(--primary-yellow);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .overlay-position {
+            position: absolute;
+            top: 43px;
+            left: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            background: rgba(10, 0, 90, 0.8);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .player-main-info h1 { margin: 0; font-size: 28px; color: var(--primary-yellow); }
+        .sub-info { color: #aaa; margin-top: 5px; font-size: 14px; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-column {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-column h3 {
+            font-size: 16px;
+            border-bottom: 1px solid var(--primary-yellow);
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            color: var(--primary-yellow);
+            text-transform: uppercase;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid #2a2a2a;
+            font-size: 14px;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            min-width: 35px;
+            text-align: center;
+            background: var(--color-low); /* Mặc định */
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: var(--primary-yellow);
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="../index.html" class="back-btn">← BACK</a>
+
+    <div class="player-header">
+        <div class="img-container">
+            <div class="overlay-rating">87</div>
+            <div class="overlay-position">CB</div>
+            <img src="https://d1zxa6glxh8sq9.cloudfront.net/player_88039581926569_1775124360618.webp" alt="Nesta">
+        </div>
+        <div class="player-main-info">
+            <h1>Nesta</h1>
+            <div class="sub-info">Team: S.S Lazio   Age:21  Height: 187cm</div>
+            <div class="sub-info">Playstyle: The Destroyer | Foot: Right</div>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-column">
+            <h3>Attacking</h3>
+            <div class="stat-item"><span>Offensive Awareness</span><span class="stat-value">52</span></div>
+            <div class="stat-item"><span>Ball Control</span><span class="stat-value">62</span></div>
+            <div class="stat-item"><span>Dribbling</span><span class="stat-value">60</span></div>
+            <div class="stat-item"><span>Tight Possession</span><span class="stat-value">62</span></div>
+            <div class="stat-item"><span>Finishing</span><span class="stat-value">50</span></div>
+            <div class="stat-item"><span>Heading</span><span class="stat-value">70</span></div>
+            <div class="stat-item"><span>Low Pass</span><span class="stat-value">68</span></div>
+            <div class="stat-item"><span>Lofted Pass</span><span class="stat-value">68</span></div>
+            <div class="stat-item"><span>Curl</span><span class="stat-value">60</span></div>
+        </div>
+
+        <div class="stat-column">
+            <h3>Physical</h3>
+            <div class="stat-item"><span>Speed</span><span class="stat-value">81</span></div>
+            <div class="stat-item"><span>Acceleration</span><span class="stat-value">77</span></div>
+            <div class="stat-item"><span>Kicking Power</span><span class="stat-value">67</span></div>
+            <div class="stat-item"><span>Jumping</span><span class="stat-value">82</span></div>
+            <div class="stat-item"><span>Physical Contact</span><span class="stat-value">81</span></div>
+            <div class="stat-item"><span>Balance</span><span class="stat-value">64</span></div>
+            <div class="stat-item"><span>Stamina</span><span class="stat-value">75</span></div>
+        </div>
+
+        <div class="stat-column">
+            <h3>Defending</h3>
+            <div class="stat-item"><span>Defensive Awareness</span><span class="stat-value">84</span></div>
+            <div class="stat-item"><span>Engagement</span><span class="stat-value">84</span></div>
+            <div class="stat-item"><span>Tackling</span><span class="stat-value">84</span></div>
+            <div class="stat-item"><span>Aggression</span><span class="stat-value">80</span></div>
+        </div>
+
+        <div class="stat-column">
+            <h3>Goalkeeping</h3>
+            <div class="stat-item"><span>GK Awareness</span><span class="stat-value">40</span></div>
+            <div class="stat-item"><span>GK Catching</span><span class="stat-value">40</span></div>
+            <div class="stat-item"><span>GK Parrying</span><span class="stat-value">40</span></div>
+            <div class="stat-item"><span>GK Reflexes</span><span class="stat-value">40</span></div>
+            <div class="stat-item"><span>GK Reach</span><span class="stat-value">40</span></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Hàm tự động đổi màu dựa trên giá trị số
+    function applyStatColors() {
+        const stats = document.querySelectorAll('.stat-value');
+        
+        stats.forEach(stat => {
+            const value = parseInt(stat.innerText);
+            
+            if (value >= 80 && value <= 89) {
+                // Từ 80-89: Xanh lá, chữ đen
+                stat.style.backgroundColor = '#00ff00';
+                stat.style.color = '#000';
+            } else if (value >= 70 && value <= 79) {
+                // Từ 70-79: Vàng, chữ đen
+                stat.style.backgroundColor = '#ffff00';
+                stat.style.color = '#000';
+            } else if (value >= 90) {
+                // Trên 90: Xanh dương nhạt (giống game), chữ đen
+                stat.style.backgroundColor = '#00e5ff';
+                stat.style.color = '#000';
+            } else if (value < 40) {
+                // Dưới 40: Màu đỏ tối
+                stat.style.backgroundColor = '#ff4d4d';
+                stat.style.color = '#fff';
+            } else {
+                // Mặc định (Dưới 70): Xám, chữ trắng
+                stat.style.backgroundColor = '#444';
+                stat.style.color = '#fff';
+            }
+        });
+    }
+
+    // Chạy hàm ngay khi trang web tải xong
+    window.onload = applyStatColors;
+</script>
+
+</body>
+</html>
