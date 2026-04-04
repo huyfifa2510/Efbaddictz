@@ -1,1 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Details - eFootballaddictz</title>
+    <style>
+        :root {
+            --primary: #ffff00;
+            --bg: #121212;
+            --card-bg: #1e1e1e;
+            --text: #ffffff;
+            --accent: #00e5ff;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .back-link { color: var(--primary); text-decoration: none; font-weight: bold; }
+
+        /* Bố cục chính giống eFootballHub */
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr; /* Chia 2 cột: Ảnh và Chỉ số */
+            gap: 20px;
+        }
+
+        /* Cột bên trái: Ảnh và thông tin cơ bản */
+        .player-info-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #333;
+        }
+
+        .player-photo { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+        .rating-badge { font-size: 40px; font-weight: 900; color: var(--primary); }
+
+        /* Cột bên phải: Thanh chỉ số */
+        .stats-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #333;
+        }
+
+        .stat-group { margin-bottom: 15px; }
+        .stat-label { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 14px; }
+        
+        /* Thanh bar chỉ số */
+        .bar-bg { background: #333; height: 8px; border-radius: 4px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease-in-out; }
+
+        /* Màu sắc chỉ số theo mức độ (Giống game) */
+        .excellent { background: #ff0055; } /* 90+ */
+        .good { background: #ffaa00; }      /* 80-89 */
+        .average { background: #ffff00; }   /* 70-79 */
+    </style>
+</head>
+<body>
+
+    <a href="../index.html" class="back-link">← Quay lại danh sách</a>
+
+    <div class="container">
+        <div class="player-info-card">
+            <img src="https://d1zxa6glxh8sq9.cloudfront.net/player_88039581926569_1775124360618.webp" class="player-photo" alt="Nesta">
+            <div class="rating-badge">98</div>
+            <h2>Alessandro Nesta</h2>
+            <p style="color: #bbb;">Build: The Destroyer | Pos: CB</p>
+        </div>
+
+        <div class="stats-container">
+            <h3>Player Stats</h3>
+            
+            <div class="stat-group">
+                <div class="stat-label"><span>Defensive Awareness</span> <span>95</span></div>
+                <div class="bar-bg"><div class="bar-fill excellent" style="width: 95%;"></div></div>
+            </div>
+
+            <div class="stat-group">
+                <div class="stat-label"><span>Speed</span> <span>82</span></div>
+                <div class="bar-bg"><div class="bar-fill good" style="width: 82%;"></div></div>
+            </div>
+
+            <div class="stat-group">
+                <div class="stat-label"><span>Physical Contact</span> <span>88</span></div>
+                <div class="bar-bg"><div class="bar-fill good" style="width: 88%;"></div></div>
+            </div>
+
+            <div class="stat-group">
+                <div class="stat-label"><span>Stamina</span> <span>78</span></div>
+                <div class="bar-bg"><div class="bar-fill average" style="width: 78%;"></div></div>
+            </div>
+            
+            <hr style="border: 0.5px solid #333; margin: 20px 0;">
+            <h3>Playing Styles</h3>
+            <p>Fighting Spirit, Interception, Man Marking, Sliding Tackle.</p>
+        </div>
+    </div>
+
+</body>
+</html>
 
